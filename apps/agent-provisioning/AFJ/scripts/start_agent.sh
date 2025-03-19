@@ -99,7 +99,7 @@ IP_REGEX="^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$"
 
 # Check if INBOUND_ENDPOINT is a domain or IP address
 if [[ $INBOUND_ENDPOINT =~ ^https?://[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$ ]]; then
-  echo "INBOUND_ENDPOINT is domain: $INBOUND_ENDPOINT"
+  echo "INBOUND_ENDPOINT is a domain: $INBOUND_ENDPOINT"
   # Extracting the domain name without the protocol
   AGENT_ENDPOINT=$(echo "$INBOUND_ENDPOINT" | sed 's/^https\?:\/\///')
 else
