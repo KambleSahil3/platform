@@ -8,7 +8,7 @@ on:
       - 'apps/agent-provisioning/**'
 
 env:
-  SERVICE: AGENT-PROVISIONING
+  SERVICE: agent-provisioning
 
 jobs:
   build-and-push:
