@@ -34,11 +34,14 @@ jobs:
 
       - name: Build and Push Docker Image
         run: |
-          IMAGE_NAME=ghcr.io/$(echo "${{ github.repository_owner }}" | tr '[:upper:]' '[:lower:]')//$SERVICE:latest
+          REPO_OWNER=$(echo "${{ github.repository_owner }}" | tr '[:upper:]' '[:lower:]')
+          SERVICE_NAME="${{ env.SERVICE }}"
+
+          IMAGE_NAME="ghcr.io/${REPO_OWNER}/${SERVICE_NAME}:latest"
 
           echo "Building Docker image for agent-provisioning ..."
           docker build -t $IMAGE_NAME -f Dockerfiles/Dockerfile.agent-provisioning .
 
-          echo $IMAGE_NAME
+          echo "Docker Image Name: ${IMAGE_NAME}"
           echo "Pushing Docker image to GitHub Container Registry..."
           docker push $IMAGE_NAME
