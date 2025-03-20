@@ -1,11 +1,16 @@
 name: Agent-Provisioning
 
+# on:
+#   push:
+#     branches:
+#       - main
+#     paths:
+#       - 'apps/agent-provisioning/**'
+
 on:
   push:
-    branches:
-      - main
-    paths:
-      - 'apps/agent-provisioning/**'
+    tags:
+      - 'v*'
 
 env:
   SERVICE: agent-provisioning
