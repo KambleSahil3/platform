@@ -50,8 +50,12 @@ jobs:
           IMAGE_NAME="ghcr.io/${REPO_OWNER}/${SERVICE_NAME}:${IMAGE_TAG}"
 
           echo "Building Docker image for agent-provisioning ..."
-          docker build -t $IMAGE_NAME -f Dockerfiles/Dockerfile.agent-provisioning .
+          docker build -t $IMAGE_NAME -f Dockerfiles/Dockerfile.${SERVICE_NAME} .
 
-          echo "Docker Image Name: ${IMAGE_NAME}"
-          echo "Pushing Docker image to GitHub Container Registry..."
-          docker push $IMAGE_NAME
+          docker tag "${IMAGE_NAME}" "${IMAGE_LATEST}"
+
+          echo "Pushing Docker image: ${IMAGE_NAME}"
+          docker push "${IMAGE_NAME}"
+
+          echo "Pushing Docker image: ${IMAGE_LATEST}"
+          docker push "${IMAGE_LATEST}"
