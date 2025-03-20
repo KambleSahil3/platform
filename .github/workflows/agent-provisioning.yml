@@ -48,14 +48,15 @@ jobs:
           IMAGE_TAG="${{ env.TAG }}"
 
           IMAGE_NAME="ghcr.io/${REPO_OWNER}/${SERVICE_NAME}:${IMAGE_TAG}"
+          IMAGE_LATEST="ghcr.io/${REPO_OWNER}/${SERVICE_NAME}:latest"
 
           echo "Building Docker image for agent-provisioning ..."
           docker build -t $IMAGE_NAME -f Dockerfiles/Dockerfile.${SERVICE_NAME} .
 
           docker tag "${IMAGE_NAME}" "${IMAGE_LATEST}"
 
-          echo "Pushing Docker image: ${IMAGE_NAME}"
+          echo "📤 Pushing Docker image: ${IMAGE_NAME}"
           docker push "${IMAGE_NAME}"
 
-          echo "Pushing Docker image: ${IMAGE_LATEST}"
+          echo "📤 Pushing Docker image: ${IMAGE_LATEST}"
           docker push "${IMAGE_LATEST}"
