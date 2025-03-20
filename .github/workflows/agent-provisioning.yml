@@ -7,6 +7,9 @@ on:
     paths:
       - 'apps/agent-provisioning/**'
 
+env:
+  SERVICE: AGENT-PROVISIONING
+
 jobs:
   build-and-push:
     name: Push Docker image to GitHub
@@ -34,7 +37,7 @@ jobs:
           IMAGE_NAME=$(echo "${{ github.repository_owner }}" | tr '[:upper:]' '[:lower:]')
 
           echo "Building Docker image for agent-provisioning ..."
-          docker build -t $IMAGE_NAME -f Dockerfiles/Dockerfile.agent-provisioning .
+          docker build -t ghcr.io/$IMAGE_NAME/$SERVICE:latest -f Dockerfiles/Dockerfile.agent-provisioning .
 
           echo $IMAGE_NAME
           echo "Pushing Docker image to GitHub Container Registry..."
