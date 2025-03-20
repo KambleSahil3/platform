@@ -2,7 +2,6 @@
 
 START_TIME=$(date +%s)
 
-
 AGENCY=$1
 EXTERNAL_IP=$2
 WALLET_NAME=$3
