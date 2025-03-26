@@ -12,13 +12,30 @@ on:
     tags:
       - 'v*'
 
-env:
-  SERVICE: agent-provisioning
+# env:
+#   SERVICE: agent-provisioning
 
 jobs:
   build-and-push:
     name: Push Docker image to GitHub
     runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        service:
+          - agent-provisioning
+          - agent-service
+          - api-gateway
+          - cloud-wallet
+          - connection
+          - geolocation
+          - issuance
+          - ledger
+          - notification
+          - user
+          - utility
+          - verification
+          - webhook
 
     permissions:
       contents: read
@@ -41,7 +58,7 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.TOKEN_GITHUB }}
 
-      - name: Build and Push Docker Image
+      - name: Build and Push Docker Image ${matrix.service}
         run: |
           REPO_OWNER=$(echo "${{ github.repository_owner }}" | tr '[:upper:]' '[:lower:]')
           SERVICE_NAME="${{ env.SERVICE }}"
@@ -51,7 +68,7 @@ jobs:
           IMAGE_LATEST="ghcr.io/${REPO_OWNER}/${SERVICE_NAME}:latest"
 
           echo "Building Docker image for agent-provisioning ..."
-          docker build -t $IMAGE_NAME -f Dockerfiles/Dockerfile.${SERVICE_NAME} .
+          docker build -t $IMAGE_NAME -f Dockerfiles/Dockerfile.${matrix.service} .
 
           docker tag "${IMAGE_NAME}" "${IMAGE_LATEST}"
 
