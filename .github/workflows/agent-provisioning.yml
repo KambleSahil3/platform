@@ -12,8 +12,9 @@ on:
     tags:
       - 'v*'
 
-# env:
-#   SERVICE: agent-provisioning
+env:
+  REGISTRY: ghcr.io
+  
 
 jobs:
   build-and-push:
@@ -59,21 +60,11 @@ jobs:
           password: ${{ secrets.TOKEN_GITHUB }}
 
       - name: Build and Push Docker Image ${{ matrix.service }}
-        run: |
-          REPO_OWNER=$(echo "${{ github.repository_owner }}" | tr '[:upper:]' '[:lower:]')
-          SERVICE_NAME="${{ matrix.service }}"
-          IMAGE_TAG="${{ env.TAG }}"
-
-          IMAGE_NAME="ghcr.io/${REPO_OWNER}/${SERVICE_NAME}:${IMAGE_TAG}"
-          IMAGE_LATEST="ghcr.io/${REPO_OWNER}/${SERVICE_NAME}:latest"
-
-          echo "Building Docker image for ${{ matrix.service }} ..."
-          docker build -t $IMAGE_NAME -f Dockerfiles/Dockerfile.${{ matrix.service }} .
-
-          docker tag "${IMAGE_NAME}" "${IMAGE_LATEST}"
-
-          echo "📤 Pushing Docker image: ${IMAGE_NAME}"
-          docker push "${IMAGE_NAME}"
-
-          echo "📤 Pushing Docker image: ${IMAGE_LATEST}"
-          docker push "${IMAGE_LATEST}"
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: Dockerfiles/Dockerfile.${{ matrix.service }}
+          push: true
+          tags: |
+            ${{ env.REGISTRY }}/${{ github.repository_owner }}/${{ matrix.service }}:${{ env.TAG }}
+            ${{ env.REGISTRY }}/${{ github.repository_owner }}/${{ matrix.service }}:latest
