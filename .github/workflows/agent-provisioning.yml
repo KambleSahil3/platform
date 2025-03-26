@@ -61,7 +61,7 @@ jobs:
       - name: Build and Push Docker Image ${{ matrix.service }}
         run: |
           REPO_OWNER=$(echo "${{ github.repository_owner }}" | tr '[:upper:]' '[:lower:]')
-          SERVICE_NAME="${matrix.service}"
+          SERVICE_NAME="${{ matrix.service }}"
           IMAGE_TAG="${{ env.TAG }}"
 
           IMAGE_NAME="ghcr.io/${REPO_OWNER}/${SERVICE_NAME}:${IMAGE_TAG}"
