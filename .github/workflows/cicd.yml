@@ -69,5 +69,5 @@ jobs:
           file: Dockerfiles/Dockerfile.${{ matrix.service }}
           push: true
           tags: |
-            ${{ env.REGISTRY }}/${{ github.repository_owner }}/${{ matrix.service }}:${{ env.TAG }}
+            ${{ env.REGISTRY }}/${{ env.REPO_OWNER }}/${{ matrix.service }}:${{ env.TAG }}
             ${{ env.REGISTRY }}/${{ env.REPO_OWNER }}/${{ matrix.service }}:latest
