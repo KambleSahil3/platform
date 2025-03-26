@@ -58,7 +58,7 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.TOKEN_GITHUB }}
 
-      - name: Build and Push Docker Image ${matrix.service}
+      - name: Build and Push Docker Image ${{ matrix.service }}
         run: |
           REPO_OWNER=$(echo "${{ github.repository_owner }}" | tr '[:upper:]' '[:lower:]')
           SERVICE_NAME="${matrix.service}"
@@ -67,8 +67,8 @@ jobs:
           IMAGE_NAME="ghcr.io/${REPO_OWNER}/${SERVICE_NAME}:${IMAGE_TAG}"
           IMAGE_LATEST="ghcr.io/${REPO_OWNER}/${SERVICE_NAME}:latest"
 
-          echo "Building Docker image for ${matrix.service} ..."
-          docker build -t $IMAGE_NAME -f Dockerfiles/Dockerfile.${matrix.service} .
+          echo "Building Docker image for ${{ matrix.service }} ..."
+          docker build -t $IMAGE_NAME -f Dockerfiles/Dockerfile.${{ matrix.service }} .
 
           docker tag "${IMAGE_NAME}" "${IMAGE_LATEST}"
 
