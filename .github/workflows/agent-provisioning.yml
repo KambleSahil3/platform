@@ -70,4 +70,4 @@ jobs:
           push: true
           tags: |
             ${{ env.REGISTRY }}/${{ github.repository_owner }}/${{ matrix.service }}:${{ env.TAG }}
-            ${{ env.REGISTRY }}/${{ github.repository_owner }}/${{ matrix.service }}:latest
+            ${{ env.REGISTRY }}/${{ env.REPO_OWNER }}/${{ matrix.service }}:latest
